@@ -16,6 +16,7 @@ Before you begin, ensure you have the following installed:
 - [Terraform](https://www.terraform.io/downloads.html) (version 1.12.0 or later)
 - [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
 - [Google Cloud SDK](https://cloud.google.com/sdk/docs/install)
+- [Kubectl](https://kubernetes.io/docs/tasks/tools/)
 
 ## Setup
 
