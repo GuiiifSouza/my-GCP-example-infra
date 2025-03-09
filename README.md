@@ -8,7 +8,6 @@ This repository demonstrates my DevOps skills using Google Cloud Platform (GCP).
 - [Setup](#setup)
 - [Usage](#usage)
 - [Destroying the Infrastructure](#destroying-the-infrastructure)
-- [Project Structure](#project-structure)
 
 ## Prerequisites
 
@@ -48,8 +47,8 @@ Before you begin, ensure you have the following installed:
 
 ## Destroying the Infrastructure
 
-To destroy the infrastructure, run the following command:
+1. To destroy the infrastructure, run the following command:
 
     ```sh
-    ansible-playbook ansible/destroy.yml
+    ansible-playbook ansible/apply.yml
     ```
