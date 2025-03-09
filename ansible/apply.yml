@@ -1,0 +1,14 @@
+---
+- name: Start infra
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  vars:
+    terraform_dir: "{{ playbook_dir }}/../terraform"
+    k8s_manifests_dir: "{{ playbook_dir }}/../kubernetes/deployments"
+
+  roles:
+    - role: terraform
+    - role: kubernetes
+      when: tf_apply is defined and tf_apply.rc == 0

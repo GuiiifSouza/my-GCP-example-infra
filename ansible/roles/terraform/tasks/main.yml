@@ -1,0 +1,32 @@
+---
+- name: Init terraform
+  ansible.builtin.command: terraform init
+  args:
+    chdir: "{{ terraform_dir }}"
+  register: tf_init
+
+- name: Exec Terraform plan
+  ansible.builtin.command: terraform plan -input=false -out=tfplan
+  args:
+    chdir: "{{ terraform_dir }}"
+  register: tf_plan
+
+- name: Apply Terraform
+  ansible.builtin.command: terraform apply -input=false tfplan
+  args:
+    chdir: "{{ terraform_dir }}"
+  register: tf_apply
+
+- name: Get variables to Terraform
+  ansible.builtin.command:
+    cmd: "terraform output -json"
+    chdir: "{{ terraform_dir }}"
+  register: terraform_outputs
+  changed_when: false
+
+- name: Defined variables to Terraform for Ansible
+  ansible.builtin.set_fact:
+    project_id: "{{ (terraform_outputs.stdout | from_json).project_id.value }}"
+    region: "{{ (terraform_outputs.stdout | from_json).region.value }}"
+    k8s_cluster_name: "{{ (terraform_outputs.stdout | from_json).k8s_cluster_name.value }}"
+

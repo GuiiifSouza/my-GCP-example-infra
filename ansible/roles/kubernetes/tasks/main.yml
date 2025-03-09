@@ -1,0 +1,27 @@
+- name: Get Kubernetes credentials via gcloud
+  ansible.builtin.command:
+    cmd: "gcloud container clusters get-credentials {{ k8s_cluster_name }} --region={{ region }} --project={{ project_id }}"
+  register: gcloud_auth
+  changed_when: false
+
+- name: Verify that kubeconfig was generated correctly
+  ansible.builtin.command:
+    cmd: "kubectl config view"
+  register: kubeconfig_check
+  changed_when: false
+
+- name: Apply all namespaces Kubernetes manifests directly using kubectl
+  ansible.builtin.shell: "kubectl apply -f {{ item }}"
+  loop: "{{ lookup('fileglob', k8s_manifests_dir ~ '/namespaces/*.yaml', wantlist=True) }}"
+  register: k8s_apply_namespaces
+  changed_when: "'configured' in k8s_apply_namespaces.stdout or 'created' in k8s_apply_namespaces.stdout"
+
+- name: Apply all resources Kubernetes manifests directly using kubectl
+  ansible.builtin.shell: "kubectl apply -f {{ item }}"
+  loop: "{{ lookup('fileglob', k8s_manifests_dir ~ '/resources/*.yaml', wantlist=True) }}"
+  register: k8s_apply_resources
+  changed_when: "'configured' in k8s_apply_resources.stdout or 'created' in k8s_apply_resources.stdout"
+
+- name: Show output of kubectl apply
+  ansible.builtin.debug:
+    msg: "{{ k8s_apply_resources.results | map(attribute='stdout') | list }}"

@@ -1,0 +1,10 @@
+project_id                = "my-gcp-example-infra"
+region                    = "us-west1"
+vpc_name                  = "my-vpc"
+public_subnet_cidr_block  = "10.0.0.0/24"
+private_subnet_cidr_block = "10.0.1.0/24"
+availability_zones        = ["us-west1-a"]
+instance_type             = "e2-medium"
+node_count                = 3
+node_ssd_size_gb          = 30
+k8s_cluster_name          = "my-k8s-cluster"

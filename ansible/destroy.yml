@@ -1,0 +1,21 @@
+---
+- name: Destroy infra
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  vars:
+    terraform_dir: "{{ playbook_dir }}/../terraform"
+
+  tasks:
+    - name: Exec Terraform Destroy
+      ansible.builtin.command:
+        cmd: "terraform destroy -auto-approve"
+        chdir: "{{ terraform_dir }}"
+      register: tf_destroy
+      changed_when: "'Destroy complete' in tf_destroy.stdout"
+      failed_when: tf_destroy.rc != 0
+
+    - name: Show Terraform Destroy
+      ansible.builtin.debug:
+        msg: "{{ tf_destroy.stdout_lines }}"
