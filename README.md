@@ -33,6 +33,12 @@ Before you begin, ensure you have the following installed:
     gcloud auth application-default login
     ```
 
+3. Configure your tfvars:
+
+    ```sh
+     cp terraform/terraform.tfvars.example terraform/terraform.tfvars
+    ```
+
 ## Usage
 
 1. Apply the Terraform configuration to create the infrastructure:
