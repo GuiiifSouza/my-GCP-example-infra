@@ -50,5 +50,5 @@ Before you begin, ensure you have the following installed:
 1. To destroy the infrastructure, run the following command:
 
     ```sh
-    ansible-playbook ansible/apply.yml
+    ansible-playbook ansible/destroy.yml
     ```
